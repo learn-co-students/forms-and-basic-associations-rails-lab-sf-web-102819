@@ -3,7 +3,18 @@
 <%= form_for @song  do |f| %>
   <%= f.label :title %>
   <%= f.text_field :title %>
-  <br />
+  <%= f.label :artist%>
+  <%= f.text_field :artist_name%>
+  <%= f.label :genre%>
+  <%= f.text_field :genre_id, list: "genres_autocomplete" %>
+  <%= f.select :genre_id, options_from_collection_for_select(Genre.all, "id", "name") %>
+  <%= f.fields_for :notes do |note_form| %>
+    <%# See: https://api.rubyonrails.org/v5.2.3/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for %>
+    <%= note_form.label :note %>
+    <%= note_form.text_area :content, rows: 5, cols: 50 %>
+    <br/>
+  <% end %>
+  <br>
 
   <%= f.submit %>
 <% end %>
